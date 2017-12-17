@@ -5,7 +5,6 @@
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
 @time: 2017/10/20 22:10
-
 """
 
 import urllib
@@ -59,13 +58,22 @@ def get_searchjac_list(kyw=None, page=1):
         name = name.text
         inbuystat = inbuystat.text
         inprogress = inprogress.text
-        interest = interest.text
-        rangeday = rangeday.find_parent().text
+        interest = interest.text.replace(u"%","")
+        rangeday = rangeday.find_parent().text.replace(u"天","")
 
         #print name.encode('utf-8')
         #print inbuystat.encode('utf-8')
 
-        data = [name, inbuystat, inprogress, interest, rangeday, '\t']
+        # Inflation = 3%, (6.5 -> 39.16)
+        rangeday2 = str(float(rangeday)/30)
+        interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+        delta = str(float(interest_shadow) / float(rangeday2))
+
+        #print name.encode('utf-8')
+        #print inbuystat.encode('utf-8')
+
+        data = [name, inbuystat, inprogress, interest, rangeday, rangeday2,  interest_shadow, delta, '\t']
+        #data = [name, inbuystat, inprogress, interest, rangeday, '\t']
         print '|'.join(data).encode('utf-8')
         #print inbuystat.text.encode('utf-8')
 
@@ -80,4 +88,3 @@ if __name__=='__main__':
     #test_webpage('https://www.juaicai.cn')
 
     get_searchjac_list()
-
