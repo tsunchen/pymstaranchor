@@ -5,7 +5,6 @@
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
 @time: 2017/10/23 12:10
-
 """
 
 
@@ -15,9 +14,9 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 
 def get_searchbym_list(kyw=None, page=1):
@@ -72,12 +71,19 @@ def get_searchbym_list(kyw=None, page=1):
         inbuystat = inbuystat.text.strip()
         inprogress = inprogress.text.strip()
         interest = interest.text.strip() # .replace("\n", "") #.replace(u"年化收益","")
-        rangeday = rangeday.text.strip()+u"天"
+        
+        #rangeday = rangeday.text.strip()+u"天"
+        rangeday = rangeday.text.strip()
+
+        # Inflation = 3%, (6.5 -> 39.16)
+        rangeday2 = str(float(rangeday)/30)
+        interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+        delta = str(float(interest_shadow) / float(rangeday2))
 
         #print name.encode('utf-8')
         #print inbuystat.encode('utf-8')
 
-        data = [name, inbuystat, inprogress, interest, rangeday,'\t']
+        data = [name, inbuystat, inprogress, interest, rangeday, rangeday2,  interest_shadow, delta, '\t']
         datalist1.append(rangeday.replace(u"天",""))
         datalist2.append(data)
         #dictdata = dict(zip(rangeday,data))
