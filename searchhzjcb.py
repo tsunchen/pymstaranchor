@@ -5,7 +5,6 @@
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
 @time: 2017/10/23 11:10
-
 """
 
 
@@ -14,6 +13,11 @@ import time
 
 import requests
 from bs4 import BeautifulSoup
+
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
+
 
 def get_searchhzjcb_list(kyw=None, page=1):
     url = 'https://www.hzjcb.com/borrow/listNew.do'
@@ -55,15 +59,20 @@ def get_searchhzjcb_list(kyw=None, page=1):
         name = name.text.strip()
         inbuystat = inbuystat.text.strip()
         inprogress = inprogress.text.strip()
-        interest = interest.text.strip().replace("\n", "").replace(u"年化收益","")
-        rangeday = rangeday.text.strip()
+        interest = interest.text.strip().replace("\n", "").replace(u"年化收益","").replace(u"%","").replace(" ","")
+        rangeday = rangeday.text.strip().replace(u"天","")
 
-        #print name.encode('utf-8')
-        #print inbuystat.encode('utf-8')
-
-        data = [name, inbuystat, inprogress, interest, rangeday,'\t']
-        #data = [name, inprogress, interest, rangeday]
-        print '|'.join(data).encode('utf-8')
+        if (rangeday != '7'):
+            # Inflation = 3%, (6.5 -> 39.16)
+            rangeday2 = str(float(rangeday)/30)
+            interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+            delta = str(float(interest_shadow) / float(rangeday2))
+            #print name.encode('utf-8')
+            #print inbuystat.encode('utf-8')
+            #data = [name, inbuystat, inprogress, interest, rangeday, '\t']
+            data = [name, inbuystat, inprogress, interest, rangeday, rangeday2, interest_shadow, delta, '\t']
+            #data = [name, inprogress, interest, rangeday]
+            print '|'.join(data).encode('utf-8')
 
    
     time.sleep(5)
