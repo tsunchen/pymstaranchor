@@ -17,6 +17,22 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
+
+
+
+def calPlus(d):
+   if '+' in d:
+     #print ('+')
+     ld, rd = d.split("+")
+     return float(ld)+float(rd)
+     #return (d[:-2])
+   else:
+     #print (d)
+     return float(d)
+
+
+
+
 def get_searchcgtz_list(kyw=None, page=1):
     #url = 'http://www.mailiangwang.com/biz/list'
     #url = 'https://www.cgtz.com/projects.html'
@@ -79,13 +95,21 @@ def get_searchcgtz_list(kyw=None, page=1):
         name = name.text.strip()
         inbuystat = inbuystat.text.strip()
         inprogress = inprogress.text.strip()
-        interest = interest.strip()
-        rangeday = rangeday.find_parent().text.strip().replace("\n","").replace(" ","")
+        interest = interest.strip().replace("%","")
+        interest = str(calPlus(interest))
+        rangeday = rangeday.find_parent().text.strip().replace("\n","").replace(" ","").replace(u"投资期限","").replace(u"天","")
 
         #print name.encode('utf-8')
         #print inbuystat.encode('utf-8')
 
-        data = [name, inbuystat, inprogress, interest, rangeday,'\t']
+        # Inflation = 3%, (6.5 -> 39.16)
+        rangeday2 = str(float(rangeday)/30)
+        interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+        delta = str(float(interest_shadow) / float(rangeday2))
+
+
+        #data = [name, inbuystat, inprogress, interest, rangeday,'\t']
+        data = [name, inbuystat, inprogress, interest, rangeday, rangeday2,  interest_shadow, delta, '\t']
         #data = [name, inprogress, interest, rangeday]
         print '|'.join(data).encode('utf-8')
 
@@ -99,7 +123,8 @@ def get_searchcgtz_list(kyw=None, page=1):
 
 
 if __name__=='__main__':
-    #test_webpage('https://www')
+    #test_webpage('https://www.juaicai.cn')
     print ("+--line of split--+")
     get_searchcgtz_list()
-
+    #print calPlus("15")
+    #print calPlus("9 + 2.2")
