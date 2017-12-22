@@ -38,13 +38,17 @@ def get_searchhzjcb_list(kyw=None, page=1):
 
     time.sleep(5)
 
-    names = soup.select('#listForm > div.secondArea > div.leftArea > div > div.title')
+    #names = soup.select('#listForm > div.secondArea > div.leftArea > div > div.title')
+    names = soup.select(".title") # update 201712222325
+    names = names[1:]
     #print (names)
 
     inbuystatus = soup.select('#listForm > div.secondArea > div.leftArea > div > a')
+    #inbuystatus = ('#listForm > div.secondArea > div.leftArea > div > a')
     #print (inbuystatus)
 
-    inprogresses = soup.select('#listForm > div.secondArea > div.leftArea > div > div.result > p.totol > span')
+    #inprogresses = soup.select('#listForm > div.secondArea > div.leftArea > div > div.result > p.totol > span')
+    inprogresses = soup.select('#listForm > div.secondArea > div.leftArea > div > div.result > p.totol > span.progressNum') # update 201712222352
     #listForm > div.secondArea > div.leftArea > div > div.limit > div')
     #print (inprogresses)
 
@@ -54,12 +58,14 @@ def get_searchhzjcb_list(kyw=None, page=1):
     rangedays = soup.select('#listForm > div.secondArea > div.leftArea > div > div.limit > p.term > span')
     #print (rangedays)
 
+    
     for name, inbuystat, inprogress, interest, rangeday in zip(names, inbuystatus, inprogresses, interests, rangedays):
     #for name, inprogress, interest, rangeday in zip(names, inprogresses, interests, rangedays):
         name = name.text.strip()
         inbuystat = inbuystat.text.strip()
-        inprogress = inprogress.text.strip()
-        interest = interest.text.strip().replace("\n", "").replace(u"年化收益","").replace(u"%","").replace(" ","")
+        inprogress = inprogress.text.strip().replace("\n","").replace("\t","")
+        #interest = interest.text.strip().replace("\n", "").replace(u"年化收益","").replace(u"%","").replace(" ","")
+        interest = interest.text.strip().replace("\n", "").replace(u"年化收益率","").replace("\t","").replace(u"%","")  # update 201712222336
         rangeday = rangeday.text.strip().replace(u"天","")
 
         if (rangeday != '7'):
@@ -70,11 +76,10 @@ def get_searchhzjcb_list(kyw=None, page=1):
             #print name.encode('utf-8')
             #print inbuystat.encode('utf-8')
             #data = [name, inbuystat, inprogress, interest, rangeday, '\t']
-            data = [name, inbuystat, inprogress, interest, rangeday, rangeday2, interest_shadow, delta, '\t']
+            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
             #data = [name, inprogress, interest, rangeday]
             print '|'.join(data).encode('utf-8')
-
-   
+       
     time.sleep(5)
     print ("+--line of split--+")
 
