@@ -20,6 +20,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+
+
 def calPlus(d):
    if '+' in d:
      #print ('+')
@@ -37,6 +39,9 @@ def getdynamic_searchhqb_list():
     print (driver)
     driver.get(url)
     print (driver.current_url)
+
+    response = requests.get(url)
+    print (response.status_code)
     time.sleep(1)
     #driver.save_screenshot("hqb.png")
 
@@ -49,6 +54,8 @@ def getdynamic_searchhqb_list():
 
     #names = soup.select('#listForm > div.secondArea > div.leftArea > div > div.title')
     names = soup.select("#show_products_short > div > ul > li.products_name") # update 201712222325
+    #names = names[0:]
+    #print (names)
 
     inbuystatus = soup.select('#show_products_short > div > ul > li.products_btn > a')
     #inbuystatus = ('#listForm > div.secondArea > div.leftArea > div > a')
