@@ -50,7 +50,7 @@ def get_searchhzjcb_list(kyw=None, page=1):
     #inprogresses = soup.select('#listForm > div.secondArea > div.leftArea > div > div.result > p.totol > span')
     inprogresses = soup.select('#listForm > div.secondArea > div.leftArea > div > div.result > p.totol > span.progressNum') # update 201712222352
     #listForm > div.secondArea > div.leftArea > div > div.limit > div')
-    #print (inprogresses)
+    print (inprogresses)
 
     interests = soup.select('#listForm > div.secondArea > div.leftArea > div > div.Profit')
     #print (interests)
@@ -63,9 +63,9 @@ def get_searchhzjcb_list(kyw=None, page=1):
     #for name, inprogress, interest, rangeday in zip(names, inprogresses, interests, rangedays):
         name = name.text.strip()
         inbuystat = inbuystat.text.strip()
-        inprogress = inprogress.text.strip().replace("\n","").replace("\t","")
+        inprogress = inprogress.text.strip().replace("\t","").replace("\r\n","")
         #interest = interest.text.strip().replace("\n", "").replace(u"年化收益","").replace(u"%","").replace(" ","")
-        interest = interest.text.strip().replace("\n", "").replace(u"年化收益率","").replace("\t","").replace(u"%","")  # update 201712222336
+        interest = interest.text.strip().replace("\r\n", "").replace(u"年化收益率","").replace("\t","").replace(u"%","").replace("\n","")  # update 201712222336
         rangeday = rangeday.text.strip().replace(u"天","")
 
         if (rangeday != '7'):
