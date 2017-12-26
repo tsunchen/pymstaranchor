@@ -4,7 +4,7 @@
 """
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
-@time: 2017/10/23 11:10
+@time: 2017/12/26 18:10
 """
 
 
@@ -17,6 +17,17 @@ from bs4 import BeautifulSoup
 #import sys
 #reload(sys)
 #sys.setdefaultencoding('utf-8')
+
+def calPlus(d):
+   if '+' in d:
+     #print ('+')
+     ld, rd = d.split("+")
+     return float(ld)+float(rd)
+     #return (d[:-2])
+   else:
+     #print (d)
+     return float(d)
+
 
 
 def get_searchhzjcb_list(kyw=None, page=1):
@@ -50,7 +61,7 @@ def get_searchhzjcb_list(kyw=None, page=1):
     #inprogresses = soup.select('#listForm > div.secondArea > div.leftArea > div > div.result > p.totol > span')
     inprogresses = soup.select('#listForm > div.secondArea > div.leftArea > div > div.result > p.totol > span.progressNum') # update 201712222352
     #listForm > div.secondArea > div.leftArea > div > div.limit > div')
-    print (inprogresses)
+    #print (inprogresses)
 
     interests = soup.select('#listForm > div.secondArea > div.leftArea > div > div.Profit')
     #print (interests)
@@ -63,11 +74,22 @@ def get_searchhzjcb_list(kyw=None, page=1):
     #for name, inprogress, interest, rangeday in zip(names, inprogresses, interests, rangedays):
         name = name.text.strip()
         inbuystat = inbuystat.text.strip()
-        inprogress = inprogress.text.strip().replace("\t","").replace("\r\n","")
+        inprogress = inprogress.text.strip().replace("\t","").replace("\n","")
         #interest = interest.text.strip().replace("\n", "").replace(u"年化收益","").replace(u"%","").replace(" ","")
-        interest = interest.text.strip().replace("\r\n", "").replace(u"年化收益率","").replace("\t","").replace(u"%","").replace("\n","")  # update 201712222336
+        interest = interest.text.strip().replace("\r\n", "").replace(u"预期年化收益率","").replace("\t","").replace(u"%","").replace("\n","")  # update 201712222336
+        interest = str(calPlus(interest)) # added 20171226
         rangeday = rangeday.text.strip().replace(u"天","")
 
+        # Inflation = 3%, (6.5 -> 39.16)
+        rangeday2 = str(float(rangeday)/30)
+        interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+        delta = str(float(interest_shadow) / float(rangeday2))
+
+        data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+        print '|'.join(data).encode('utf-8')
+
+
+        '''
         if (rangeday != '7'):
             # Inflation = 3%, (6.5 -> 39.16)
             rangeday2 = str(float(rangeday)/30)
@@ -75,11 +97,13 @@ def get_searchhzjcb_list(kyw=None, page=1):
             delta = str(float(interest_shadow) / float(rangeday2))
             #print name.encode('utf-8')
             #print inbuystat.encode('utf-8')
+            
             #data = [name, inbuystat, inprogress, interest, rangeday, '\t']
             data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
             #data = [name, inprogress, interest, rangeday]
             print '|'.join(data).encode('utf-8')
-       
+        '''
+
     time.sleep(5)
     print ("+--line of split--+")
 
