@@ -4,7 +4,7 @@
 """
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
-@time: 2017/10/23 12:10
+@time: 2017/12/27 06:40
 """
 
 
@@ -75,26 +75,27 @@ def get_searchbym_list(kyw=None, page=1):
         #rangeday = rangeday.text.strip()+u"天"
         rangeday = rangeday.text.strip()
 
-        # Inflation = 3%, (6.5 -> 39.16)
-        rangeday2 = str(float(rangeday)/30)
-        interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
-        delta = str(float(interest_shadow) / float(rangeday2))
+        if inbuystat == u"立即投资":
+            # Inflation = 3%, (6.5 -> 39.16)
+            rangeday2 = str(float(rangeday)/30)
+            interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+            delta = str(float(interest_shadow) / float(rangeday2))
 
-        #print name.encode('utf-8')
-        #print inbuystat.encode('utf-8')
-
-        data = [name, inbuystat, inprogress, interest, rangeday, rangeday2,  interest_shadow, delta, '\t']
-        datalist1.append(rangeday.replace(u"天",""))
-        datalist2.append(data)
-        #dictdata = dict(zip(rangeday,data))
-        #data = [name, inprogress, interest, rangeday]
-        print '|'.join(data).encode('utf-8')
+            #print name.encode('utf-8')
+            #print inbuystat.encode('utf-8')
+            #data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", '\t']
+            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+            #datalist1.append(rangeday.replace(u"天",""))
+            #datalist2.append(data)
+            #dictdata = dict(zip(rangeday,data))
+            #data = [name, inprogress, interest, rangeday]
+            print '|'.join(data).encode('utf-8')
 
 
 
     #print datalist1
     #print datalist2
-    dicdata = zip(datalist1,datalist2)
+    #dicdata = zip(datalist1,datalist2)
     #print dicdata
 
     #sortedDictValues2(dicdata)
