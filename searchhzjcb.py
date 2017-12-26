@@ -4,7 +4,7 @@
 """
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
-@time: 2017/12/26 18:10
+@time: 2017/12/27 11:10
 """
 
 
@@ -80,13 +80,14 @@ def get_searchhzjcb_list(kyw=None, page=1):
         interest = str(calPlus(interest)) # added 20171226
         rangeday = rangeday.text.strip().replace(u"天","")
 
-        # Inflation = 3%, (6.5 -> 39.16)
-        rangeday2 = str(float(rangeday)/30)
-        interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
-        delta = str(float(interest_shadow) / float(rangeday2))
+        if inbuystat == u"立即投标":
+            # Inflation = 3%, (6.5 -> 39.16)
+            rangeday2 = str(float(rangeday)/30)
+            interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+            delta = str(float(interest_shadow) / float(rangeday2))
 
-        data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
-        print '|'.join(data).encode('utf-8')
+            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+            print '|'.join(data).encode('utf-8')
 
 
         '''
