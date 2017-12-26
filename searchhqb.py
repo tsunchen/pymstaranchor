@@ -4,7 +4,7 @@
 """
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
-@time: 2017/12/25 11:10
+@time: 2017/12/27 11:10
 """
 
 
@@ -80,13 +80,14 @@ def getdynamic_searchhqb_list():
         interest = str(calPlus(interest))
         rangeday = rangeday.text.strip().replace(u"理财期限","").replace(u"天","")
 
-        # Inflation = 3%, (6.5 -> 39.16)
-        rangeday2 = str(float(rangeday)/30)
-        interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
-        delta = str(float(interest_shadow) / float(rangeday2))
-        #data = [name, inbuystat, inprogress, interest, rangeday]
-        data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
-        print '|'.join(data)
+        if inbuystat == u"立即赚钱":
+            # Inflation = 3%, (6.5 -> 39.16)
+            rangeday2 = str(float(rangeday)/30)
+            interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
+            delta = str(float(interest_shadow) / float(rangeday2))
+            #data = [name, inbuystat, inprogress, interest, rangeday]
+            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+            print '|'.join(data)
 
     time.sleep(5)
     print ("+--line of split--+")
