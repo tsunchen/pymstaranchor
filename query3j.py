@@ -12,6 +12,7 @@ import searchcgtz
 import searchhzjcb
 import searchbym
 import searchhqb
+import searchinw
 
 
 
@@ -21,3 +22,4 @@ if __name__=='__main__':
     searchhzjcb.get_searchhzjcb_list()
     searchbym.get_searchbym_list() 
     searchhqb.getdynamic_searchhqb_list()
+    searchinw.get_searchinw_list()
