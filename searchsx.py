@@ -20,6 +20,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+import types
+
 
 def calMonthDay(d):
    #.replace(u"个月","").replace(u"天","")
@@ -30,6 +32,8 @@ def calMonthDay(d):
    elif u"天" in d:
      #print ('Day')
      return (d.replace(u"天",""))
+   else:
+        return ("1")
 
 
 
@@ -44,11 +48,12 @@ def calPlus(d):
      return float(d)
 
 
-
-def getdynamic_searchsx_list(kyw=None, page=1):
-    url = 'https://www.suoxing.vip/index/standard/list2/3/0'
-
-    driver = webdriver.PhantomJS(executable_path = r'E:\dataUSB\phantomjs\phantomjs-2.1.1-windows\bin\phantomjs.exe')
+#'https://www.suoxing.vip/index/standard/list2/3/0'
+def getdynamic_searchsx_list(url,kyw=None, page=1):
+    #url = 'https://www.suoxing.vip/index/standard/list2/3/0'
+    url = url
+    driver = webdriver.PhantomJS(executable_path = r'E:\phantomjs-2.1.1-windows\bin\phantomjs.exe')
+    #driver = webdriver.PhantomJS(executable_path = r'E:\dataUSB\phantomjs\phantomjs-2.1.1-windows\bin\phantomjs.exe')
     print (driver)
     driver.get(url)
     print (driver.current_url)
@@ -114,12 +119,13 @@ def getdynamic_searchsx_list(kyw=None, page=1):
         #print '|'.join(data).encode('utf-8')
 
 
-        if inbuystat != u"":
+        if inbuystat != u"还款中":            
+            #print (rangeday)
+            #print type(rangeday)
             # Inflation = 3%, (6.5 -> 39.16)
             rangeday2 = str(float(rangeday)/30)
             interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
             delta = str(float(interest_shadow) / float(rangeday2))
-
             #print name.encode('utf-8')
             #print inbuystat.encode('utf-8')
             #data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", '\t']
@@ -150,4 +156,9 @@ def sortedDictValues2(adict):
 if __name__=='__main__':
     #test_webpage('https://www.juaicai.cn')
     print ("+--line of split--+")
-    getdynamic_searchsx_list()
+    #'https://www.suoxing.vip/index/standard/list2/3/0'
+    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/3/0', kyw=None, page=1)
+    #getdynamic_searchsx_list()
+    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/1/0', kyw=None, page=1)
+    #getdynamic_searchsx_list()
+    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/7/7', kyw=None, page=1)
