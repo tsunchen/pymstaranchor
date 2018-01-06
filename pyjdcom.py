@@ -55,3 +55,4 @@ if __name__=='__main__':
     print ("+--line of split--+")
     getdynamic_jd_list(u"花生500g", "peanut500g")
     getdynamic_jd_list(u"牛奶1L", "milk1L")
+    getdynamic_jd_list(u"酱油1.8L", "soysaurce1.8L")
