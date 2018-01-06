@@ -20,7 +20,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-import types
+#import types
 
 
 def calMonthDay(d):
@@ -153,12 +153,18 @@ def sortedDictValues2(adict):
     #return [dict[key] for key in keys] 
 
 
+def getdynamic_searchsx_lists():
+    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/3/0', kyw=None, page=1)
+    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/1/0', kyw=None, page=1)
+    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/7/7', kyw=None, page=1)
+
+
 if __name__=='__main__':
     #test_webpage('https://www.juaicai.cn')
     print ("+--line of split--+")
     #'https://www.suoxing.vip/index/standard/list2/3/0'
-    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/3/0', kyw=None, page=1)
+    #getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/3/0', kyw=None, page=1)
+    getdynamic_searchsx_lists()
+    #getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/1/0', kyw=None, page=1)
     #getdynamic_searchsx_list()
-    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/1/0', kyw=None, page=1)
-    #getdynamic_searchsx_list()
-    getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/7/7', kyw=None, page=1)
+    #getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/7/7', kyw=None, page=1)
