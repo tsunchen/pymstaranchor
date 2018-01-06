@@ -19,9 +19,10 @@ import searchsx
 
 if __name__=='__main__':
     searchjac.get_searchjac_list()
+    searchjac.get_searchjac_debt_list()
     searchcgtz.get_searchcgtz_list()
     searchhzjcb.get_searchhzjcb_list()
     searchbym.get_searchbym_list() 
     searchhqb.getdynamic_searchhqb_list()
     searchinw.get_searchinw_list()
-    searchsx.getdynamic_searchsx_list()
+    searchsx.getdynamic_searchsx_lists()
