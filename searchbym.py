@@ -4,7 +4,7 @@
 """
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
-@time: 2017/12/27 06:40
+@time: 2017/10/23 12:10
 """
 
 
@@ -38,7 +38,8 @@ def get_searchbym_list(kyw=None, page=1):
 
     time.sleep(5)
 
-    names = soup.select('body > div.main > div > div > div > p > a')
+    names = soup.select('body > div.main > div > div > div > p')
+    #body > div.main > div:nth-child(3) > div > div:nth-child(3) > p
     #print (names)
 
     inbuystatus = soup.select('body > div.main > div > div > div > ul > li > a')
@@ -67,7 +68,7 @@ def get_searchbym_list(kyw=None, page=1):
     dicdata = []
     for name, inbuystat, inprogress, interest, rangeday in zip(names, inbuystatus, inprogresses, interests, rangedays_li3):
     #for name, inprogress, interest, rangeday in zip(names, inprogresses, interests, rangedays):
-        name = name.text.strip()
+        name = name.text.strip().replace("\n","")
         inbuystat = inbuystat.text.strip()
         inprogress = inprogress.text.strip()
         interest = interest.text.strip() # .replace("\n", "") #.replace(u"年化收益","")
@@ -75,7 +76,7 @@ def get_searchbym_list(kyw=None, page=1):
         #rangeday = rangeday.text.strip()+u"天"
         rangeday = rangeday.text.strip()
 
-        if inbuystat == u"立即投资":
+        if inbuystat != u"":
             # Inflation = 3%, (6.5 -> 39.16)
             rangeday2 = str(float(rangeday)/30)
             interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
