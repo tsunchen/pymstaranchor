@@ -25,4 +25,5 @@ if __name__=='__main__':
     searchbym.get_searchbym_list() 
     searchhqb.getdynamic_searchhqb_list()
     searchinw.get_searchinw_list()
+    searchinw.getdynamic_searchinw_list()
     searchsx.getdynamic_searchsx_lists()
