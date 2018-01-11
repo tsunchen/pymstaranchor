@@ -5,8 +5,6 @@
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
 @time: 2017/12/29 12:10
-
-2018-1-2 getdynamic_searchinw_list
 """
 
 
@@ -106,7 +104,7 @@ def get_searchinw_list(kyw=None, page=1):
         #data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", '\t']
         #print '|'.join(data).encode('utf-8')
 
-        if inbuystat != u"":
+        if inbuystat != u"已抢光":
             # Inflation = 3%, (6.5 -> 39.16)
             rangeday2 = str(float(rangeday)/30)
             interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
@@ -115,7 +113,7 @@ def get_searchinw_list(kyw=None, page=1):
             #print name.encode('utf-8')
             #print inbuystat.encode('utf-8')
             #data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", '\t']
-            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+            data = [name, inbuystat, inprogress, interest+u" %", rangeday+u" 天", delta, '\t']
             #datalist1.append(rangeday.replace(u"天",""))
             #datalist2.append(data)
             #dictdata = dict(zip(rangeday,data))
@@ -203,15 +201,15 @@ def getdynamic_searchinw_list(kyw=None, page=1):
             #print name.encode('utf-8')
             #print inbuystat.encode('utf-8')
             #data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", '\t']
-            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+            data = [name, inbuystat, inprogress, interest+u" %", rangeday+u" 天", delta, '\t']
             #datalist1.append(rangeday.replace(u"天",""))
             #datalist2.append(data)
             #dictdata = dict(zip(rangeday,data))
             #data = [name, inprogress, interest, rangeday]
             print '|'.join(data).encode('utf-8')
 
-    #time.sleep(5)
-    #print ("+--line of split--+")
+    time.sleep(5)
+    print ("+--line of split--+")
     
 
 
