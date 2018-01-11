@@ -52,8 +52,8 @@ def calPlus(d):
 def getdynamic_searchsx_list(url,kyw=None, page=1):
     #url = 'https://www.suoxing.vip/index/standard/list2/3/0'
     url = url
-    driver = webdriver.PhantomJS(executable_path = r'E:\phantomjs-2.1.1-windows\bin\phantomjs.exe')
-    #driver = webdriver.PhantomJS(executable_path = r'E:\dataUSB\phantomjs\phantomjs-2.1.1-windows\bin\phantomjs.exe')
+    #driver = webdriver.PhantomJS(executable_path = r'E:\phantomjs-2.1.1-windows\bin\phantomjs.exe')
+    driver = webdriver.PhantomJS(executable_path = r'E:\dataUSB\phantomjs\phantomjs-2.1.1-windows\bin\phantomjs.exe')
     print (driver)
     driver.get(url)
     print (driver.current_url)
@@ -80,7 +80,9 @@ def getdynamic_searchsx_list(url,kyw=None, page=1):
     names = soup.select('#tab > ul > li.title.clearfix > p')
     #print (names)
 
-    inbuystatus = soup.select('#tab > ul > li.five.fl > a')
+    inbuystatus = soup.select('#tab > ul > li.five.fl > a > span')
+    ##hms_timer0
+    ##tab > ul:nth-child(1) > li.five.fl > a
     #print (inbuystatus)
 
     inprogresses = soup.select('#tab > ul > li.five.fl > p')
@@ -136,8 +138,8 @@ def getdynamic_searchsx_list(url,kyw=None, page=1):
             #data = [name, inprogress, interest, rangeday]
             print '|'.join(data).encode('utf-8')
 
-    #time.sleep(5)
-    #print ("+--line of split--+")
+    time.sleep(5)
+    print ("+--line of split--+")
     
 
 
