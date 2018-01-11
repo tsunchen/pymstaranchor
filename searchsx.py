@@ -54,7 +54,7 @@ def getdynamic_searchsx_list(url,kyw=None, page=1):
     url = url
     #driver = webdriver.PhantomJS(executable_path = r'E:\phantomjs-2.1.1-windows\bin\phantomjs.exe')
     driver = webdriver.PhantomJS(executable_path = r'E:\dataUSB\phantomjs\phantomjs-2.1.1-windows\bin\phantomjs.exe')
-    print (driver)
+    #print (driver)
     driver.get(url)
     print (driver.current_url)
     #print (driver.page_source)
@@ -131,7 +131,7 @@ def getdynamic_searchsx_list(url,kyw=None, page=1):
             #print name.encode('utf-8')
             #print inbuystat.encode('utf-8')
             #data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", '\t']
-            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+            data = [name, inbuystat, inprogress, interest+u" %", rangeday+u" 天", delta, '\t']
             #datalist1.append(rangeday.replace(u"天",""))
             #datalist2.append(data)
             #dictdata = dict(zip(rangeday,data))
