@@ -4,7 +4,7 @@
 """
 @author: tsunc & zadmine
 @software: PyCharm Community Edition
-@time: 2017/12/27 11:10
+@time: 2017/10/23 11:10
 """
 
 
@@ -72,9 +72,9 @@ def get_searchhzjcb_list(kyw=None, page=1):
     
     for name, inbuystat, inprogress, interest, rangeday in zip(names, inbuystatus, inprogresses, interests, rangedays):
     #for name, inprogress, interest, rangeday in zip(names, inprogresses, interests, rangedays):
-        name = name.text.strip()
+        name = name.text.strip().replace("\r\n","").replace("\t","") // updated on 20180118
         inbuystat = inbuystat.text.strip()
-        inprogress = inprogress.text.strip().replace("\t","").replace("\n","")
+        inprogress = inprogress.text.strip().replace("\t","").replace("\r\n","") // updated on 20180118
         #interest = interest.text.strip().replace("\n", "").replace(u"年化收益","").replace(u"%","").replace(" ","")
         interest = interest.text.strip().replace("\r\n", "").replace(u"预期年化收益率","").replace("\t","").replace(u"%","").replace("\n","")  # update 201712222336
         interest = str(calPlus(interest)) # added 20171226
