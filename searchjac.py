@@ -22,7 +22,8 @@ from bs4 import BeautifulSoup
 #sys.setdefaultencoding('utf-8')
 
 
-def get_searchjac_list(url, kyw=None, page=1):
+def get_searchjac_list(selecton, url, kyw=None, page=1):
+    #print selecton
     url = url
     #url = 'https://www.juaicai.cn/product/productlist'
     payload = {'keyword': kyw, 'pageid': page}
@@ -34,22 +35,28 @@ def get_searchjac_list(url, kyw=None, page=1):
     print response.status_code
     soup = BeautifulSoup(response.text, 'lxml')
     #print soup
+    
     #names = soup.select('body > div.wrap > div.merchantList > div.p_dataList > div.p_dataItem > span.n1 > a')
     #print names
-    names = soup.select('#porductlist_li > li > div.list-item > div.item-headline > h3')
+    #names = soup.select('#porductlist_li > li > div.list-item > div.item-headline > h3')
+    names = soup.select(selecton[0])
     #print names
 
-    inbuystatus = soup.select('#porductlist_li > li > div.item-sub-btn > a')
+    #inbuystatus = soup.select('#porductlist_li > li > div.item-sub-btn > a')
+    inbuystatus = soup.select(selecton[1])
     #print inbuystatus
 
-    inprogresses = soup.select('#porductlist_li > li > div.list-item > div.progress-bar > div > div > h4 > em')
+    #inprogresses = soup.select('#porductlist_li > li > div.list-item > div.progress-bar > div > div > h4 > em')
+    inprogresses = soup.select(selecton[2])
     #print inprogresses
 
     #interests = soup.select('#porductlist_li > li > div.list-item > div.item-rate.clearfix > dl > dt')
-    interests = soup.select(".red")
+    #interests = soup.select(".red")
+    interests = soup.select(selecton[3])
     #print interests
 
-    rangedays = soup.select('#porductlist_li > li > div.list-item > div.item-rate.clearfix > dl > dt > em')
+    #rangedays = soup.select('#porductlist_li > li > div.list-item > div.item-rate.clearfix > dl > dt > em')
+    rangedays = soup.select(selecton[4])
     #print rangedays
 
     #for rngday in rangedays:
@@ -59,9 +66,9 @@ def get_searchjac_list(url, kyw=None, page=1):
     for name, inbuystat, inprogress, interest, rangeday in zip(names, inbuystatus, inprogresses, interests, rangedays):
         name = name.text
         inbuystat = inbuystat.text
-        inprogress = inprogress.text
+        inprogress = inprogress.text.replace("\r\n","").replace("\t","")
         interest = interest.text.replace(u"%","")
-        rangeday = rangeday.find_parent().text.replace(u"天","")
+        rangeday = rangeday.find_parent().text.replace("\t","").replace("\r\n","").replace(u"天","").replace("\n","")
 
         #print name.encode('utf-8')
         #print inbuystat.encode('utf-8')
@@ -153,11 +160,27 @@ def get_searchjac_debt_list(url, kyw=None, page=1):
 '''
 
 def get_searchjac_lists():
-    get_searchjac_list('https://www.juaicai.cn/activity/productlist-debt')
-    get_searchjac_list('https://www.juaicai.cn/product/productlist')
+    selecton_productlist_debt = [
+      '#porductlist_li > li > div.list-item > div.item-headline > h3',
+      '#porductlist_li > li > div.item-sub-btn > a',
+      '#porductlist_li > li > div.list-item > div.progress-bar > h1',
+      '.red',
+      '#porductlist_li > li > div.list-item > div.item-rate.clearfix > dl > dt > em'
+    ]
+    get_searchjac_list(selecton_productlist_debt , 'https://www.juaicai.cn/activity/productlist-debt')
+
+    selecton_productlist = [
+      '#porductlist_li > li > div.list-item > div.item-headline > h3',
+      '#porductlist_li > li > div.item-sub-btn > a',
+      '#porductlist_li > li > div.list-item > div.progress-bar > div > div > h4 > em',
+      '.red',
+      '#porductlist_li > li > div.list-item > div.item-rate.clearfix > dl > dt > em'
+    ]
+    get_searchjac_list(selecton_productlist , 'https://www.juaicai.cn/product/productlist')
 
 
 
 if __name__=='__main__':
     #test_webpage('https://www.juaicai.cn')
+    print ("+--line of split--+")
     get_searchjac_lists()
