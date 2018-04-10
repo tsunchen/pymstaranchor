@@ -7,7 +7,6 @@
 @time: 2017/10/23 11:10
 """
 
-import searchsetting
 
 import re
 import time
@@ -35,7 +34,8 @@ def calPlus(d):
 
 def getdynamic_searchhqb_list():
     url = 'https://www.hqblicai.com/invest/index.html'
-    #PhantomJS_path = "E:/dataUSB/phantomjs/phantomjs-2.1.1-windows/bin"
+    PhantomJS_path = "E:/phantomjs-2.1.1-windows/bin"
+    #driver = webdriver.PhantomJS(executable_path = r'E:\phantomjs-2.1.1-windows\bin\phantomjs.exe')
     driver = webdriver.PhantomJS(executable_path = r'E:\dataUSB\phantomjs\phantomjs-2.1.1-windows\bin\phantomjs.exe')
     print (driver)
     driver.get(url)
@@ -71,7 +71,7 @@ def getdynamic_searchhqb_list():
     #print (interests)
 
     rangedays = soup.select('#show_products_short > div > ul > li.products_time.clearfix > div.left')
-    #print (rangedays)
+    print (rangedays)
 
     for name, inbuystat, inprogress, interest, rangeday in zip(names, inbuystatus, inprogresses, interests, rangedays):
         name = name.text.strip()
@@ -79,12 +79,12 @@ def getdynamic_searchhqb_list():
         inprogress = inprogress.text.strip()
         interest = interest.text.strip().replace(u"%","")
         interest = str(calPlus(interest))
-        rangeday = rangeday.text.strip().replace(u"理财期限","").replace(u"天","")
+        rangeday = rangeday.text.strip().replace(u"投资期限","").replace(u"天","")
 
         if inbuystat == u"立即赚钱":
             # Inflation = 3%, (6.5 -> 39.16)
             rangeday2 = str(float(rangeday)/30)
-            interest_shadow = str( (float(interest) - searchsetting.search_Inflation) / ((searchsetting.search_shadow_interest_parameter/float(rangeday)*365/10000 + 0.03)*100) )
+            interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
             delta = str(float(interest_shadow) / float(rangeday2))
             #data = [name, inbuystat, inprogress, interest, rangeday]
             data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
@@ -98,7 +98,8 @@ def getdynamic_searchhqb_list():
 
 
 
-
+def runit(t):
+    getdynamic_searchhqb_list()
 
 
 
