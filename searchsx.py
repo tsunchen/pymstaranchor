@@ -36,16 +36,21 @@ def calMonthDay(d):
         return ("1")
 
 
-
-def calPlus(d):
+# claPlus_Or // define process the split ~
+def calPlus_Or(d):
    if '+' in d:
      #print ('+')
      ld, rd = d.split("+")
      return float(ld)+float(rd)
      #return (d[:-2])
+   elif '~' in d:
+     ld, rd = d.split("~")
+     return float(ld)
    else:
      #print (d)
      return float(d)
+
+
 
 
 #'https://www.suoxing.vip/index/standard/list2/3/0'
@@ -112,7 +117,7 @@ def getdynamic_searchsx_list(url,kyw=None, page=1):
         inbuystat = inbuystat.text.strip()
         inprogress = inprogress.text.strip().replace("\n", "")
         interest = interest.text.strip().replace("\r\n", "").replace("\t","").replace("%","")
-        interest = str(calPlus(interest))
+        interest = str(calPlus_Or(interest))
         rangeday = rangeday.text.strip()  #.replace(u"个月","").replace(u"天","")
         rangeday = str(calMonthDay(rangeday))
 
@@ -121,7 +126,8 @@ def getdynamic_searchsx_list(url,kyw=None, page=1):
         #print '|'.join(data).encode('utf-8')
 
 
-        if inbuystat != u"还款中":            
+        #if inbuystat != u"还款中" or :  
+        if inbuystat != u"":          
             #print (rangeday)
             #print type(rangeday)
             # Inflation = 3%, (6.5 -> 39.16)
@@ -160,6 +166,9 @@ def getdynamic_searchsx_lists():
     getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/1/0', kyw=None, page=1)
     getdynamic_searchsx_list('https://www.suoxing.vip/index/standard/list2/7/7', kyw=None, page=1)
 
+
+def runit(t):
+    getdynamic_searchsx_lists()
 
 if __name__=='__main__':
     #test_webpage('https://www.juaicai.cn')
