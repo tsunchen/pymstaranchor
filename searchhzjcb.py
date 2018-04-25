@@ -72,9 +72,10 @@ def get_searchhzjcb_list(kyw=None, page=1):
     
     for name, inbuystat, inprogress, interest, rangeday in zip(names, inbuystatus, inprogresses, interests, rangedays):
     #for name, inprogress, interest, rangeday in zip(names, inprogresses, interests, rangedays):
-        name = name.text.strip().replace("\r\n","").replace("\t","") // updated on 20180118
+        name = name.text.strip().replace("\r\n","")
         inbuystat = inbuystat.text.strip()
-        inprogress = inprogress.text.strip().replace("\t","").replace("\r\n","") // updated on 20180118
+        inprogress = inprogress.text.strip().replace("\t","").replace("\n","")
+        #inprogress = inprogress.text.strip().replace("\t","").replace("\r\n","")
         #interest = interest.text.strip().replace("\n", "").replace(u"年化收益","").replace(u"%","").replace(" ","")
         interest = interest.text.strip().replace("\r\n", "").replace(u"预期年化收益率","").replace("\t","").replace(u"%","").replace("\n","")  # update 201712222336
         interest = str(calPlus(interest)) # added 20171226
@@ -86,7 +87,7 @@ def get_searchhzjcb_list(kyw=None, page=1):
             interest_shadow = str( (float(interest) - 3) / ((float('39.16')/float(rangeday)*365/10000 + 0.03)*100) )
             delta = str(float(interest_shadow) / float(rangeday2))
 
-            data = [name, inbuystat, inprogress, interest+u"%", rangeday+u"天", delta, '\t']
+            data = [name, inbuystat, inprogress, interest+u" %", rangeday+u" 天", delta, '\t']
             print '|'.join(data).encode('utf-8')
 
 
@@ -109,6 +110,9 @@ def get_searchhzjcb_list(kyw=None, page=1):
     print ("+--line of split--+")
 
 
+
+def runit(t):
+    get_searchhzjcb_list()
 
 
 if __name__=='__main__':
