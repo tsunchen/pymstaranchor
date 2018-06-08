@@ -80,11 +80,11 @@ def get_searchjac_list(selecton, url, kyw=None, page=1):
 
         #print name.encode('utf-8')
         #print inbuystat.encode('utf-8')
-
-        data = [name, inbuystat, inprogress, interest+u"%", rangeday+u" 天", delta, '\t']
-        #data = [name, inbuystat, inprogress, interest, rangeday, '\t']
-        print '|'.join(data).encode('utf-8')
-        #print inbuystat.text.encode('utf-8')
+        if delta > '0.3':
+            data = [name, inbuystat, inprogress, interest+u" "+ url +" ", rangeday+u" 天", delta, '\t']
+            #data = [name, inbuystat, inprogress, interest, rangeday, '\t']
+            print '|'.join(data).encode('utf-8')
+            #print inbuystat.text.encode('utf-8')
 
     time.sleep(5)
     print ("+--line of split--+")
@@ -177,6 +177,10 @@ def get_searchjac_lists():
       '#porductlist_li > li > div.list-item > div.item-rate.clearfix > dl > dt > em'
     ]
     get_searchjac_list(selecton_productlist , 'https://www.juaicai.cn/product/productlist')
+
+
+def runit(t):
+    get_searchjac_lists()
 
 
 
