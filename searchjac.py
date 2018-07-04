@@ -17,6 +17,8 @@ import time
 import requests
 from bs4 import BeautifulSoup
 
+import pymstaranchorsetting
+
 #import sys
 #reload(sys)
 #sys.setdefaultencoding('utf-8')
@@ -68,6 +70,8 @@ def get_searchjac_list(selecton, url, kyw=None, page=1):
         inbuystat = inbuystat.text
         inprogress = inprogress.text.replace("\r\n","").replace("\t","")
         interest = interest.text.replace(u"%","")
+        interest = str(pymstaranchorsetting.calPlus(interest))
+
         rangeday = rangeday.find_parent().text.replace("\t","").replace("\r\n","").replace(u"天","").replace("\n","")
 
         #print name.encode('utf-8')
