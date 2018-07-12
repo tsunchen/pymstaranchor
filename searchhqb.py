@@ -92,7 +92,7 @@ def getdynamic_searchhqb_list():
 
     time.sleep(5)
     print ("+--line of split--+")
-    driver.close()
+    #driver.close()
     driver.quit()
 
 
