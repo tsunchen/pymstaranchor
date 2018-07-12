@@ -13,11 +13,11 @@ import searchxyc
 import searchjac
 import searchcgtz
 import searchhzjcb
-import searchbym
+import searchbym_dataframe
 import searchhqb
 ##import searchinw
-import searchsx
-import searchdy
+import searchsx_dataframe
+##import searchdy
 import searchxj
 
 import os
@@ -31,16 +31,17 @@ if __name__=='__main__':
 
 	functionpool = [
 
-            getattr(searchxyc,   'runit'),
-            getattr(searchbym,   'runit'),
-	    getattr(searchsx,    'runit'),
+		
+        getattr(searchbym_dataframe,   'runit'),
+	    getattr(searchsx_dataframe,    'runit'),
 	    getattr(searchhzjcb, 'runit'),
 	    
+	    getattr(searchxyc,   'runit'),
 	    getattr(searchjac,   'runit'),
 	    getattr(searchcgtz,  'runit'),
 	    getattr(searchhqb,   'runit'),
 	    
-	    #getattr(searchdy,    'runit'),
+	    ##getattr(searchdy,    'runit'),
 	    getattr(searchxj,    'runit')
 
 	    ]
