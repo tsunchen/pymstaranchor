@@ -17,9 +17,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
 
-#import sys
-#reload(sys)
-#sys.setdefaultencoding('utf-8')
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
 def get_searchbym_list(kyw=None, page=1):
@@ -58,6 +58,7 @@ def get_searchbym_list(kyw=None, page=1):
     #print (interests)
 
     rangedays = soup.select('body > div.main > div > div > div > div.fl > ul > li > p > span')
+    #print (rangedays)
     #print len(rangedays)
     #soup.find_all("a", text="Elsie")
     #rangedays = soup.find_all(re.compile("投资期限"))
@@ -65,6 +66,8 @@ def get_searchbym_list(kyw=None, page=1):
     for rx in range(2, len(rangedays), 4): 
         #print rangedays[rx]
         rangedays_li3.append(rangedays[rx])
+        #print rangedays_li3
+    #print rangedays_li3
    
     datalist1 = []
     datalist2 = []
@@ -73,6 +76,8 @@ def get_searchbym_list(kyw=None, page=1):
     arr_buffer =[]
     columns_name = ['','Name','Inbuystat','Inprogess','Interest','Rangeday','Delta','']
     arr_buffer.append(columns_name)
+
+    
 
     for name, inbuystat, inprogress, interest, rangeday in zip(names, inbuystatus, inprogresses, interests, rangedays_li3):
     #for name, inprogress, interest, rangeday in zip(names, inprogresses, interests, rangedays):
@@ -83,6 +88,12 @@ def get_searchbym_list(kyw=None, page=1):
         
         #rangeday = rangeday.text.strip()+u"天"
         rangeday = rangeday.text.strip()
+        #print (rangeday)
+        if rangeday != u"进行中":
+            rangeday = rangeday
+        else:
+            rangeday = "180"
+
 
        
         if inbuystat != u"":
@@ -106,7 +117,8 @@ def get_searchbym_list(kyw=None, page=1):
             #print data.encode('utf-8')
             print '|'.join(data).encode('utf-8') 
             arr_buffer.append(data_o)
-    
+            #print '|'.join(data_o).encode('utf-8') 
+
     return (arr_buffer)
     #print(arr_buffer)
     #here append post-progress
@@ -147,7 +159,13 @@ def sortedDictValues2(adict):
 
 
 def runit(t):
-    get_searchbym_list()
+    #get_searchbym_list()
+    arr_buffer_o = get_searchbym_list()
+    data_arr_buffer = np.array(arr_buffer_o)
+    res = pd.DataFrame(data=data_arr_buffer[1:,1:],index=data_arr_buffer[1:,0],columns=data_arr_buffer[0,1:])
+    res_s = res.sort_values(by=['Delta'], ascending=False)
+    print( res_s[['Inprogess','Interest', 'Rangeday','Delta']][(res_s['Delta']<'1.0')&(res_s['Delta']>'0.5')] )
+    print( res_s[['Inprogess','Interest', 'Rangeday','Delta']][res_s['Delta']>'1.0'] )
 
 
 if __name__=='__main__':
