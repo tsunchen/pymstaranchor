@@ -10,7 +10,7 @@
 
 
 import searchxyc
-import searchjac
+import searchjac_dataframe
 import searchcgtz
 import searchhzjcb
 import searchbym_dataframe
@@ -18,7 +18,7 @@ import searchhqb
 ##import searchinw
 import searchsx_dataframe
 ##import searchdy
-import searchxj
+##import searchxj
 
 import os
 import multiprocessing
@@ -34,15 +34,15 @@ if __name__=='__main__':
 		
         getattr(searchbym_dataframe,   'runit'),
 	    getattr(searchsx_dataframe,    'runit'),
+	    getattr(searchcgtz,  'runit'),
 	    getattr(searchhzjcb, 'runit'),
 	    
-	    getattr(searchxyc,   'runit'),
-	    getattr(searchjac,   'runit'),
-	    getattr(searchcgtz,  'runit'),
 	    getattr(searchhqb,   'runit'),
-	    
+	    getattr(searchxyc,   'runit'),
+	    getattr(searchjac_dataframe,   'runit'),
+
 	    ##getattr(searchdy,    'runit'),
-	    getattr(searchxj,    'runit')
+	    ##getattr(searchxj,    'runit')
 
 	    ]
 
