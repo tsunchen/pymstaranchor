@@ -25,13 +25,26 @@ ActionChains(driver).click(login_ele).perform()
 
 
 # 查找输入框，输入帐号密码，输入框提前清理
-logpassword = WebDriverWait(driver, 4, 0.1).until(EC.presence_of_element_located((By.ID, "loginform-password")))
-logpassword.clear()
-logpassword.send_keys("password")
-#logform-username
-logusername = WebDriverWait(driver, 5 ,0.5).until(EC.presence_of_element_located((By.ID, "loginform-username")))
-logusername.clear()
-logusername.send_keys("username")
+try:
+    logpassword = WebDriverWait(driver, 4, 0.1).until(EC.presence_of_element_located((By.ID, "loginform-password")))
+    logpassword.clear()
+    logpassword.send_keys("")
+    print ("password资源加载成功")
+except:
+    print ("password资源加载失败，发送告警邮件或短信")
+finally:
+    print ("无论是否加载成功，都将响应用于password资源清理")
+
+try:
+    #logform-username
+    logusername = WebDriverWait(driver, 5 ,0.5).until(EC.presence_of_element_located((By.ID, "loginform-username")))
+    logusername.clear()
+    logusername.send_keys("")
+    print ("username资源加载成功")
+except:
+    print("username资源加载失败，发送告警邮件或短信")
+finally:
+    print("无论是否加载成功，都将响应用于username资源清理")
 
 
 # 查找登陆按钮并点击
